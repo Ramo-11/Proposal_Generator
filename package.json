@@ -1,0 +1,28 @@
+{
+  "name": "sahab-proposal-builder",
+  "version": "1.0.0",
+  "description": "Proposal Builder Dashboard for Sahab Solutions",
+  "main": "app.js",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ejs": "^3.1.10",
+    "sqlite3": "^5.1.7",
+    "puppeteer": "^23.11.1",
+    "express-session": "^1.18.1",
+    "uuid": "^11.0.3",
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "keywords": ["proposal", "dashboard", "sahab-solutions"],
+  "author": "Sahab Solutions",
+  "license": "ISC"
+}

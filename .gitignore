@@ -1,0 +1,4 @@
+node_modules/
+dist/
+proposals.db
+package-lock.json

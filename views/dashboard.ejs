@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal Builder - Sahab Solutions</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="/images/sahab-logo.png" alt="Sahab Solutions" class="logo-img">
+                <h1>Proposal Builder</h1>
+            </div>
+            <button class="btn-primary" onclick="openModal()">
+                <i class="fas fa-plus"></i> New Proposal
+            </button>
+        </header>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h3><%= proposals.length %></h3>
+                <p>Total Proposals</p>
+            </div>
+            <div class="stat-card">
+                <h3><%= proposals.filter(p => p.status === 'draft').length %></h3>
+                <p>Drafts</p>
+            </div>
+            <div class="stat-card">
+                <h3><%= proposals.filter(p => p.status === 'sent').length %></h3>
+                <p>Sent</p>
+            </div>
+        </div>
+
+        <div class="proposals-grid">
+            <% if (proposals.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>No proposals yet</h3>
+                    <p>Create your first proposal to get started</p>
+                </div>
+            <% } else { %>
+                <% proposals.forEach(proposal => { %>
+                    <div class="proposal-card">
+                        <div class="proposal-header">
+                            <h3><%= proposal.business_name %></h3>
+                            <span class="status status-<%= proposal.status %>"><%= proposal.status %></span>
+                        </div>
+                        <div class="proposal-details">
+                            <p><strong>Contact:</strong> <%= proposal.contact_person %></p>
+                            <p><strong>Project:</strong> <%= proposal.project_type %></p>
+                            <p><strong>Budget:</strong> $<%= proposal.budget ? proposal.budget.toLocaleString() : 'TBD' %></p>
+                            <p><strong>Timeline:</strong> <%= proposal.timeline %></p>
+                        </div>
+                        <div class="proposal-footer">
+                            <small>Created: <%= dayjs(proposal.created_at).format('MMM DD, YYYY') %></small>
+                            <div class="actions">
+                                <button class="btn-secondary" onclick="editProposal('<%= proposal.id %>')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn-success" onclick="downloadPDF('<%= proposal.id %>')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="btn-danger" onclick="deleteProposal('<%= proposal.id %>')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="proposalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Create New Proposal</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="proposalForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="business_name">Business Name *</label>
+                        <input type="text" id="business_name" name="business_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact_person">Contact Person</label>
+                        <input type="text" id="contact_person" name="contact_person">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact_email">Email</label>
+                        <input type="email" id="contact_email" name="contact_email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact_phone">Phone</label>
+                        <input type="tel" id="contact_phone" name="contact_phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="project_type">Project Type *</label>
+                        <select id="project_type" name="project_type" required>
+                            <option value="">Select Type</option>
+                            <option value="Website Development">Website Development</option>
+                            <option value="Mobile App">Mobile App</option>
+                            <option value="AI Solution">AI Solution</option>
+                            <option value="Cybersecurity">Cybersecurity</option>
+                            <option value="Full Stack Solution">Full Stack Solution</option>
+                            <option value="Consultation">Consultation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timeline">Timeline</label>
+                        <input type="text" id="timeline" name="timeline" placeholder="e.g., 2-3 weeks">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="budget">Budget ($)</label>
+                        <input type="number" id="budget" name="budget" min="0" step="100">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="features">Features & Services</label>
+                        <textarea id="features" name="features" rows="4" placeholder="List the main features and services..."></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="additional_notes">Additional Notes</label>
+                        <textarea id="additional_notes" name="additional_notes" rows="3" placeholder="Any additional information..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Proposal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
