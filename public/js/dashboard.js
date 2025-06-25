@@ -29,32 +29,30 @@ function closeModal() {
 }
 
 // Load proposal data for editing
-function loadProposalData(proposalId) {
-    // Find proposal card and extract data
-    const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-    const proposal = proposals.find(p => p.id === proposalId);
-    
-    if (!proposal) {
-        // If not in localStorage, extract from DOM
-        const card = document.querySelector(`[data-id="${proposalId}"]`);
-        if (!card) return;
+async function loadProposalData(proposalId) {
+    try {
+        const response = await fetch(`/proposal/${proposalId}`);
+        const proposal = await response.json();
         
-        // Extract data from card (basic implementation)
-        const businessName = card.querySelector('h3').textContent;
-        document.getElementById('business_name').value = businessName;
-        return;
+        if (proposal) {
+            document.getElementById('business_name').value = proposal.business_name || '';
+            document.getElementById('contact_person').value = proposal.contact_person || '';
+            document.getElementById('contact_email').value = proposal.contact_email || '';
+            document.getElementById('contact_phone').value = proposal.contact_phone || '';
+            document.getElementById('project_type').value = proposal.project_type || '';
+            document.getElementById('timeline').value = proposal.timeline || '';
+            document.getElementById('budget').value = proposal.budget || '';
+            document.getElementById('features').value = proposal.features || '';
+            document.getElementById('technical_highlights').value = proposal.technical_highlights || '';
+        }
+    } catch (error) {
+        console.error('Error loading proposal data:', error);
+        showNotification('Error loading proposal data', 'error');
     }
-    
-    // Fill form with proposal data
-    document.getElementById('business_name').value = proposal.business_name || '';
-    document.getElementById('contact_person').value = proposal.contact_person || '';
-    document.getElementById('contact_email').value = proposal.contact_email || '';
-    document.getElementById('contact_phone').value = proposal.contact_phone || '';
-    document.getElementById('project_type').value = proposal.project_type || '';
-    document.getElementById('timeline').value = proposal.timeline || '';
-    document.getElementById('budget').value = proposal.budget || '';
-    document.getElementById('features').value = proposal.features || '';
-    document.getElementById('additional_notes').value = proposal.additional_notes || '';
+}
+
+function viewHTML(id) {
+    window.open(`/proposal/${id}/html`, '_blank');
 }
 
 // Form submission

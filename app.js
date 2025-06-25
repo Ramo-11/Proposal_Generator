@@ -153,6 +153,26 @@ app.get('/proposal/:id/pdf', async (req, res) => {
   });
 });
 
+app.get('/proposal/:id', (req, res) => {
+  const { id } = req.params;
+  db.get('SELECT * FROM proposals WHERE id = ?', [id], (err, proposal) => {
+    if (err || !proposal) {
+      return res.status(404).json({ error: 'Proposal not found' });
+    }
+    res.json(proposal);
+  });
+});
+
+app.get('/proposal/:id/html', (req, res) => {
+  const { id } = req.params;
+  db.get('SELECT * FROM proposals WHERE id = ?', [id], (err, proposal) => {
+    if (err || !proposal) {
+      return res.status(404).send('Proposal not found');
+    }
+    res.render('proposal-view', { proposal, dayjs });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Sahab Solutions Proposal Builder running on port ${PORT}`);
 });

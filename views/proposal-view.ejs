@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= proposal.business_name %> Proposal - Sahab Solutions</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+          font-family: 'Inter', Arial, sans-serif; 
+          line-height: 1.6;
+          color: #1a1a1a;
+          background: #f8fafc;
+          margin: 0;
+          padding: 40px 20px;
+        }
+        
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+        }
+        
+        .header {
+          background: linear-gradient(135deg, #571ac4, #7c3aed);
+          color: white;
+          padding: 40px;
+          text-align: center;
+        }
+        
+        .logo {
+          font-size: 24px;
+          font-weight: 700;
+          margin-bottom: 10px;
+        }
+        
+        .title {
+          font-size: 28px;
+          font-weight: 700;
+          margin-bottom: 10px;
+        }
+        
+        .subtitle {
+          opacity: 0.9;
+          font-size: 16px;
+        }
+        
+        .content {
+          padding: 40px;
+        }
+        
+        .section { 
+          margin-bottom: 35px;
+          background: #f8fafc;
+          border-radius: 12px;
+          padding: 25px;
+          border-left: 4px solid #571ac4;
+        }
+        
+        .section-title { 
+          font-size: 20px; 
+          font-weight: 600; 
+          color: #1e293b;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        
+        .info-grid { 
+          display: grid; 
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+          gap: 20px;
+        }
+        
+        .info-item { 
+          background: white;
+          padding: 15px;
+          border-radius: 8px;
+          border: 1px solid #e2e8f0;
+        }
+        
+        .info-label { 
+          font-weight: 600; 
+          color: #475569;
+          font-size: 14px;
+          margin-bottom: 5px;
+        }
+        
+        .info-value { 
+          color: #1e293b;
+          font-size: 16px;
+        }
+        
+        .features-section {
+          background: linear-gradient(135deg, #571ac4, #7c3aed);
+          color: white;
+          border-radius: 12px;
+          padding: 30px;
+          margin-bottom: 35px;
+        }
+        
+        .features-title {
+          font-size: 22px;
+          font-weight: 700;
+          margin-bottom: 20px;
+        }
+        
+        .feature-item {
+          background: rgba(255, 255, 255, 0.1);
+          padding: 12px 16px;
+          border-radius: 8px;
+          margin-bottom: 10px;
+          backdrop-filter: blur(10px);
+        }
+        
+        .contact-section {
+          background: #1e293b;
+          color: white;
+          padding: 30px;
+          text-align: center;
+          margin-top: 30px;
+        }
+        
+        .contact-title {
+          font-size: 22px;
+          font-weight: 700;
+          margin-bottom: 15px;
+        }
+        
+        .contact-info {
+          font-size: 16px;
+          line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">SAHAB SOLUTIONS</div>
+            <div class="title"><%= proposal.business_name %> Project Proposal</div>
+            <div class="subtitle">Professional Technology Solutions</div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <div class="section-title">👤 Client Information</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Business Name</div>
+                        <div class="info-value"><%= proposal.business_name %></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Contact Person</div>
+                        <div class="info-value"><%= proposal.contact_person || 'N/A' %></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email</div>
+                        <div class="info-value"><%= proposal.contact_email || 'N/A' %></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Phone</div>
+                        <div class="info-value"><%= proposal.contact_phone || 'N/A' %></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">📋 Project Details</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Project Type</div>
+                        <div class="info-value"><%= proposal.project_type %></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Timeline</div>
+                        <div class="info-value"><%= proposal.timeline || 'To be discussed' %></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Budget</div>
+                        <div class="info-value">$<%= proposal.budget ? parseFloat(proposal.budget).toLocaleString() : 'To be discussed' %></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Date</div>
+                        <div class="info-value"><%= dayjs(proposal.created_at).format('MMMM DD, YYYY') %></div>
+                    </div>
+                </div>
+            </div>
+            
+            <% if (proposal.features) { %>
+            <div class="features-section">
+                <div class="features-title">🚀 Features & Services</div>
+                <% proposal.features.split('\n').filter(f => f.trim()).forEach(feature => { %>
+                    <div class="feature-item"><%= feature.trim() %></div>
+                <% }); %>
+            </div>
+            <% } %>
+            
+            <% if (proposal.technical_highlights) { %>
+            <div class="features-section">
+                <div class="features-title">⚡ Technical Highlights</div>
+                <% proposal.technical_highlights.split('\n').filter(f => f.trim()).forEach(highlight => { %>
+                    <div class="feature-item"><%= highlight.trim() %></div>
+                <% }); %>
+            </div>
+            <% } %>
+        </div>
+        
+        <div class="contact-section">
+            <div class="contact-title">Ready to Get Started?</div>
+            <div class="contact-info">
+                Please review this proposal and get back to us with your feedback or questions.<br>
+                We're excited to work with you on this project!<br><br>
+                <strong>Email:</strong> sahab-solutions25@gmail.com<br>
+                <strong>Phone:</strong> (574) 406-4727<br>
+                <strong>Website:</strong> www.sahabsolutions.com
+            </div>
+        </div>
+    </div>
+</body>
+</html>

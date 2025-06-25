@@ -60,6 +60,9 @@
                                 <button class="btn-secondary" onclick="editProposal('<%= proposal.id %>')">
                                     <i class="fas fa-edit"></i>
                                 </button>
+                                <button class="btn-primary" onclick="viewHTML('<%= proposal.id %>')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
                                 <button class="btn-success" onclick="downloadPDF('<%= proposal.id %>')">
                                     <i class="fas fa-download"></i>
                                 </button>
@@ -130,10 +133,10 @@
                         <label for="features">Features & Services</label>
                         <textarea id="features" name="features" rows="4" placeholder="List the main features and services..."></textarea>
                     </div>
-                    
+
                     <div class="form-group full-width">
-                        <label for="additional_notes">Additional Notes</label>
-                        <textarea id="additional_notes" name="additional_notes" rows="3" placeholder="Any additional information..."></textarea>
+                        <label for="technical_highlights">Technical Highlights</label>
+                        <textarea id="technical_highlights" name="technical_highlights" rows="4" placeholder="List the technical highlights and specifications..."></textarea>
                     </div>
                 </div>
                 
