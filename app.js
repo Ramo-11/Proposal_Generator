@@ -26,7 +26,7 @@ db.serialize(() => {
     timeline TEXT,
     budget REAL,
     features TEXT,
-    additional_notes TEXT,
+    technical_highlights TEXT
     status TEXT DEFAULT 'draft',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -68,16 +68,16 @@ app.post('/proposal', (req, res) => {
     timeline,
     budget,
     features,
-    additional_notes
+    technical_highlights,
   } = req.body;
 
   const stmt = db.prepare(`INSERT INTO proposals 
     (id, business_name, contact_person, contact_email, contact_phone, 
-     project_type, timeline, budget, features, additional_notes) 
+     project_type, timeline, budget, features, technical_highlights) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
 
   stmt.run([id, business_name, contact_person, contact_email, contact_phone,
-           project_type, timeline, budget, features, additional_notes], (err) => {
+           project_type, timeline, budget, features, technical_highlights], (err) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to create proposal' });
@@ -97,17 +97,17 @@ app.put('/proposal/:id', (req, res) => {
     timeline,
     budget,
     features,
-    additional_notes
+    technical_highlights
   } = req.body;
 
   const stmt = db.prepare(`UPDATE proposals SET 
     business_name = ?, contact_person = ?, contact_email = ?, contact_phone = ?,
-    project_type = ?, timeline = ?, budget = ?, features = ?, additional_notes = ?,
+    project_type = ?, timeline = ?, budget = ?, features = ?, technical_highlights = ?,
     updated_at = CURRENT_TIMESTAMP
     WHERE id = ?`);
 
   stmt.run([business_name, contact_person, contact_email, contact_phone,
-           project_type, timeline, budget, features, additional_notes, id], (err) => {
+           project_type, timeline, budget, features, technical_highlights, id], (err) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ error: 'Failed to update proposal' });

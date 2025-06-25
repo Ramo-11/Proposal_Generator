@@ -61,6 +61,8 @@
           border-radius: 12px;
           padding: 25px;
           border-left: 4px solid #571ac4;
+          page-break-inside: avoid;
+          break-inside: avoid;
         }
         
         .section-title { 
@@ -96,9 +98,10 @@
         .info-value { 
           color: #1e293b;
           font-size: 16px;
+          word-break: break-word;
         }
         
-        .features-section {
+        .features-section, .technicals-section {
           background: linear-gradient(135deg, #571ac4, #7c3aed);
           color: white;
           border-radius: 12px;
@@ -106,13 +109,13 @@
           margin-bottom: 35px;
         }
         
-        .features-title {
+        .features-title, .technicals-title {
           font-size: 22px;
           font-weight: 700;
           margin-bottom: 20px;
         }
         
-        .feature-item {
+        .feature-item, .technicals-item {
           background: rgba(255, 255, 255, 0.1);
           padding: 12px 16px;
           border-radius: 8px;
@@ -137,6 +140,22 @@
         .contact-info {
           font-size: 16px;
           line-height: 1.8;
+        }
+
+        .content {
+          page-break-inside: auto;
+        }
+        
+        .features-section, .technicals-section {
+            break-before: auto;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+        
+        @media print {
+            .section, .features-section, .technicals-section {
+                page-break-inside: avoid !important;
+            }
         }
     </style>
 </head>
@@ -187,7 +206,7 @@
                         <div class="info-value">$<%= proposal.budget ? parseFloat(proposal.budget).toLocaleString() : 'To be discussed' %></div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label">Date</div>
+                        <div class="info-label">Start Date</div>
                         <div class="info-value"><%= dayjs(proposal.created_at).format('MMMM DD, YYYY') %></div>
                     </div>
                 </div>
@@ -195,7 +214,7 @@
             
             <% if (proposal.features) { %>
             <div class="features-section">
-                <div class="features-title">🚀 Features & Services</div>
+                <div class="features-title">Features & Services</div>
                 <% proposal.features.split('\n').filter(f => f.trim()).forEach(feature => { %>
                     <div class="feature-item"><%= feature.trim() %></div>
                 <% }); %>
@@ -203,10 +222,10 @@
             <% } %>
             
             <% if (proposal.technical_highlights) { %>
-            <div class="features-section">
-                <div class="features-title">⚡ Technical Highlights</div>
+            <div class="technicals-section">
+                <div class="technicals-title">Technical Highlights</div>
                 <% proposal.technical_highlights.split('\n').filter(f => f.trim()).forEach(highlight => { %>
-                    <div class="feature-item"><%= highlight.trim() %></div>
+                    <div class="technicals-item"><%= highlight.trim() %></div>
                 <% }); %>
             </div>
             <% } %>
@@ -219,7 +238,7 @@
                 We're excited to work with you on this project!<br><br>
                 <strong>Email:</strong> sahab-solutions25@gmail.com<br>
                 <strong>Phone:</strong> (574) 406-4727<br>
-                <strong>Website:</strong> www.sahabsolutions.com
+                <strong>Website:</strong> www.sahab-solutions.com
             </div>
         </div>
     </div>
